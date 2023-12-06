@@ -8,7 +8,7 @@ public class sepeda {
         String next;
         String peminjam;
         String waktu;
-
+        
         System.out.println("===========================");
         System.out.println("    Input Jumlah Sepeda    ");
         System.out.println("===========================");
@@ -57,6 +57,7 @@ public class sepeda {
             break;
         }
     }
+    
     sc.close();    
     }
 }
