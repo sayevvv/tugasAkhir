@@ -2,19 +2,103 @@ import java.util.Scanner;
 
 
 public class rentalSepeda {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+      double hargaPerJam = 0;
+      int opsiKonsumen, waktu;
+      String nama;
+      boolean quit = true, programLuar = true;
+      int jumlahJenis = 0, unitJenis = 0;
+      
+      String[][] sepeda = null;
+
+      do {
+        System.out.println("===== Menu Program =====");
+        System.out.println("1. Penyedia jasa rental");
+        System.out.println("2. Konsumen");
+        System.out.println("3. Keluar");
+        System.out.print("> Pilih opsi program : ");
+        int opsiProgram = sc.nextInt();
+
+        switch(opsiProgram) {
+          case 1:
+          System.out.println("=== Penyedia Jasa Rental ===");
+          jumlahJenis = jumlahJenis();
+
+          unitJenis = unitJenis();
+
+          hargaPerJam = harga();
+          sepeda = new String[jumlahJenis][unitJenis + 1];
+          inputJenis(sepeda);
+          tampilanSepeda(sepeda);
+
+                break;
+          case 2 :
+          do {
+            System.out.println("=== Menu (Konsumen) ===");
+            System.out.println("1. Merental");
+            System.out.println("2. Mengembalikan");
+            System.out.println("3. Kembali");
+                    System.out.print("> Pilih opsi program : ");
+                    opsiKonsumen = sc.nextInt();
+                    switch (opsiKonsumen) {
+                    case 1:
+                    boolean lanjutRental = true;
+                    while(lanjutRental) {
+    
+                      tampilanSepeda(sepeda);
+                      
+                      nama = namaPerental();
+                      
+                      waktu = lamaPinjam();
+    
+                      rentalUnit(sepeda, nama, waktu, unitJenis, waktu, hargaPerJam);
+                                       
+                      System.out.println("Y untuk lanjut || Any key untuk berhenti");
+                      System.out.print("> Ingin pesan lagi? ");
+                      String pesanLagi = sc.next();
+                      if(pesanLagi.equalsIgnoreCase("y")) {
+                      continue;
+                      }  else {
+                        lanjutRental = false;
+                      }
+                      }
+                      break;
+                    case 2:
+    
+                    tampilanSepeda(sepeda);
+                    mengembalikan(sepeda);
+                    
+                    break;
+    
+                    case 3 :
+                    quit = false;
+                    break;
+          }
+        }while (quit);
+          break;
+          case 3 :
+          programLuar = false;
+          break;
+        }
+      }while(programLuar);
+
+   
+    sc.close();    
+  }
   static void inputJenis(String [][] sepeda) {
     Scanner sc = new Scanner(System.in);
     String namaJenis;
     for (int i = 0; i < sepeda.length; i++) {
-              System.out.print("Input Jenis Sepeda " + (i+1) + " : ");
+              System.out.print("> Input Jenis Sepeda " + (i+1) + " : ");
               namaJenis = sc.next();
               sepeda[i][0] = namaJenis;
       }
   }
   static void tampilanSepeda(String [][] sepeda) {
     Scanner sc = new Scanner(System.in);
-    System.out.println("============================");
-      System.out.println("    Sepeda yang tersedia    ");
+      System.out.println("============================");
+      System.out.println("=    Sepeda yang tersedia  =");
       System.out.println("============================");
       for (int i = 0; i < sepeda.length; ++i) {
           for(int j = 0; j < sepeda[i].length; ++j) {
@@ -102,7 +186,6 @@ public class rentalSepeda {
     boolean found = false;
     boolean namaValid = false;
     
-  
     do {
       System.out.print("Input nama peminjam : ");
       String nama = sc.nextLine();
@@ -117,6 +200,9 @@ public class rentalSepeda {
                 namaValid = true;
                 System.out.println("peminjam atas nama " + nama + " telah mengembalikan sepeda");
                 sepeda[i][j] = null;
+              } else {
+                System.out.println("Nama tidak ditemukan");
+                break;
               }
             }
           }
@@ -126,73 +212,18 @@ public class rentalSepeda {
         tampilanSepeda(sepeda);
       }
     }while(!namaValid);
-  
   }
-    public static void main(String[] args) {
-      Scanner sc = new Scanner(System.in);
-      double hargaPerJam;
-      int opsiProgram, waktu;
-      String nama;
-      boolean quit = true, mainLoop = true;
-      System.out.println("Selamat datang di program RENTAL SEPEDA");
-      System.out.println("Set Rental Sepeda");
-      System.out.print("Input Jumlah Jenis Sepeda Yang Mau Direntalkan: ");
-                int jumlahJenis = sc.nextInt();
-                System.out.print("Input Jumlah Unit Per Jenis : ");
-                int unitJenis = sc.nextInt();
-                String sepeda [][] = new String[jumlahJenis][unitJenis + 1];
-                    
-                inputJenis(sepeda);
-                    
-                  
-                hargaPerJam = harga();
-              
-                tampilanSepeda(sepeda);
-                System.out.println("Dengan harga/jam : " + hargaPerJam);
-      do {
-        System.out.println("=== Menu ===");
-        System.out.println("1. Merental");
-        System.out.println("2. Mengembalikan");
-        System.out.println("3. Keluar");
-                System.out.print("Pilih opsi program : ");
-                opsiProgram = sc.nextInt();
-                switch (opsiProgram) {
-                case 1:
-                boolean lanjutRental = true;
-                while(lanjutRental) {
-                  tampilanSepeda(sepeda);
 
-                  nama = namaPerental();
-                  
-                  waktu = lamaPinjam();
-
-                  rentalUnit(sepeda, nama, waktu, unitJenis, waktu, hargaPerJam);
-                                   
-                  System.out.println("Y untuk lanjut || Any key untuk berhenti");
-                  System.out.print("Ingin pesan lagi? ");
-                  String pesanLagi = sc.next();
-                  if(pesanLagi.equalsIgnoreCase("y")) {
-                  continue;
-                  }  else {
-                    lanjutRental = false;
-                  }
-                  }
-                  break;
-
-                case 2:
-
-                tampilanSepeda(sepeda);
-                mengembalikan(sepeda);
-                
-                break;
-
-                case 3 :
-                quit = false;
-                break;
-      }
-    }while (quit);
-
-   
-sc.close();    
-}
+  static int jumlahJenis() {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("> Berapa jenis yang direntalkan : ");
+    int jumlah = sc.nextInt();
+    return jumlah;
+  }
+  static int unitJenis() {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("> Jumlah per Jenis");
+    int jumlah = sc.nextInt();
+    return jumlah;
+  }
 }
