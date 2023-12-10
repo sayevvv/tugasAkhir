@@ -13,11 +13,12 @@ public class rentalSepeda {
       String[][] sepeda = null;
 
       do {
-        System.out.println("===== Menu Program =====");
-        System.out.println("1. Penyedia jasa rental");
-        System.out.println("2. Konsumen");
-        System.out.println("3. Keluar");
-        System.out.print("> Pilih opsi program : ");
+        System.out.println("=============== Menu Program ===============");
+        System.out.println("= 1. Penyedia jasa rental                  =");
+        System.out.println("= 2. Konsumen                              =");
+        System.out.println("= 3. Keluar                                =");
+        System.out.println("============================================");
+        System.out.print("> Pilih opsi program (1/2/3) : ");
         int opsiProgram = sc.nextInt();
 
         switch(opsiProgram) {
@@ -35,11 +36,16 @@ public class rentalSepeda {
                 break;
           case 2 :
           do {
-            System.out.println("=== Menu (Konsumen) ===");
-            System.out.println("1. Merental");
-            System.out.println("2. Mengembalikan");
-            System.out.println("3. Kembali");
-                    System.out.print("> Pilih opsi program : ");
+            if (sepeda == null) {
+              System.out.println("Mohon maaf, jasa rental tidak tersedia");
+              break;
+            }
+            System.out.println("============ Menu (Konsumen) =============");
+            System.out.println("= 1. Merental                            =");
+            System.out.println("= 2. Mengembalikan                       =");
+            System.out.println("= 3. Kembali                             =");
+            System.out.println("==========================================");
+            System.out.print("> Pilih opsi program (1/2/3) : ");
                     opsiKonsumen = sc.nextInt();
                     switch (opsiKonsumen) {
                     case 1:
@@ -83,7 +89,6 @@ public class rentalSepeda {
         }
       }while(programLuar);
 
-   
     sc.close();    
   }
   static void inputJenis(String [][] sepeda) {
@@ -100,6 +105,7 @@ public class rentalSepeda {
       System.out.println("============================");
       System.out.println("=    Sepeda yang tersedia  =");
       System.out.println("============================");
+      System.out.println();
       for (int i = 0; i < sepeda.length; ++i) {
           for(int j = 0; j < sepeda[i].length; ++j) {
             if (sepeda[i][j] == null) {
