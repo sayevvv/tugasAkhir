@@ -16,18 +16,18 @@ public class sepeda {
         jumlah = sc.nextInt();
         
         String [] sepeda = new String[jumlah];
-        System.out.println("============================");
-        System.out.println("    Sepeda yang tersedia    ");
-        System.out.println("============================");
+        System.out.println("===============================");
+        System.out.println("      Sepeda yang tersedia     ");
+        System.out.println("===============================");
         for (int i = 0; i < sepeda.length; i++) {
             if (sepeda[i] == null) {
                 System.out.println("Sepeda-" + (i+1));
             } 
         }
         while(true) {
-        System.out.print("Input nama peminjam : ");
+        System.out.print("Input nama peminjam    : ");
         peminjam = sc.next();
-        System.out.print("Input nomor sepeda : ");
+        System.out.print("Input nomor sepeda     : ");
         nomorSepeda = sc.nextInt();
         System.out.print("Input waktu peminjaman : ");
         waktu = sc.next();
@@ -37,13 +37,13 @@ public class sepeda {
         }
 
         if (sepeda[nomorSepeda-1] == null) {
-            sepeda[nomorSepeda-1] = "Dipinjam oleh " + peminjam + " Selama  " + waktu;
+            sepeda[nomorSepeda-1] = "Dipinjam oleh " + peminjam + " Selama " + waktu + " jam ";
         } else {
             System.out.println("\nMohon maaf sudah terpakai, silahkan input lagi\n");
 
             continue;
         }
-        System.out.println("======================");
+        System.out.println("===============================");
         for (int i = 0; i < sepeda.length; i++) {
             if (sepeda[i] == null) {
                 System.out.println("Sepeda-" + (i+1) + " Tersedia");
@@ -51,12 +51,13 @@ public class sepeda {
                 System.out.println(sepeda[i]);
             }
         }
-        System.out.println("Pinjam lagi? (ya/tidak)");
+        System.out.print("Pinjam lagi? (ya/tidak): ");
         next = sc.next();
         if (next.equalsIgnoreCase("tidak")) {
             break;
         }
     }
+    
     sc.close();    
     }
 }
