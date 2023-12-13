@@ -4,7 +4,7 @@ public class rentalSepeda {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     double hargaPerJam = 0;
-    int opsiKonsumen, waktu;
+    int opsiKonsumen;
     String nama;
     boolean quit = true, programLuar = true;
     int jumlahJenis = 0, unitJenis = 0;
@@ -13,33 +13,55 @@ public class rentalSepeda {
 
     do {
       System.out.println("=============== Menu Program ===============");
-      System.out.println("= 1. Penyedia jasa rental                  =");
-      System.out.println("= 2. Konsumen                              =");
+      System.out.println("= 1. Set jumlah rental sepeda              =");
+      System.out.println("= 2. Rental sepeda                         =");
       System.out.println("= 3. Keluar                                =");
       System.out.println("============================================");
       System.out.print("> Pilih opsi program (1/2/3) : ");
+
       int opsiProgram = sc.nextInt();
 
       switch (opsiProgram) {
         case 1:
-          System.out.println("=== Penyedia Jasa Rental ===");
-          jumlahJenis = jumlahJenis();
+          System.out.println("=== Set Jumlah Rental Sepeda ===");
+          System.out.println();
+          System.out.print("> Password : ");
+          String password = sc.next();
 
-          unitJenis = unitJenis();
+          if (password.equalsIgnoreCase("kelompok6")) {
+            System.out.println();
+  
+            jumlahJenis = jenis();
+  
+            System.out.println();
+  
+            unitJenis = unit();
+  
+            System.out.println();
+  
+            sepeda = new String[jumlahJenis][unitJenis + 1];
+            
+            inputJenis(sepeda);
+  
+            System.out.println();
+            
+            hargaPerJam = harga();
+  
+            tampilanSepeda(sepeda);
+  
+            break;
+          } else {
+            System.out.println("Password salah");
+            break;
+          }
 
-          hargaPerJam = harga();
-          sepeda = new String[jumlahJenis][unitJenis + 1];
-          inputJenis(sepeda);
-          tampilanSepeda(sepeda);
-
-          break;
         case 2:
           do {
             if (sepeda == null) {
               System.out.println("Mohon maaf, jasa rental tidak tersedia");
               break;
             }
-            System.out.println("============ Menu (Konsumen) =============");
+            System.out.println("============== Menu Rental ===============");
             System.out.println("= 1. Merental                            =");
             System.out.println("= 2. Mengembalikan                       =");
             System.out.println("= 3. Kembali                             =");
@@ -53,11 +75,13 @@ public class rentalSepeda {
 
                   tampilanSepeda(sepeda);
 
+                  System.out.println();
+
                   nama = namaPerental();
 
-                  waktu = lamaPinjam();
+                  System.out.println();
 
-                  rentalUnit(sepeda, nama, waktu, unitJenis, waktu, hargaPerJam);
+                  rentalUnit(sepeda, nama, unitJenis, hargaPerJam);
 
                   System.out.println("Y untuk lanjut || Any key untuk berhenti");
                   System.out.print("> Ingin pesan lagi? ");
@@ -93,10 +117,9 @@ public class rentalSepeda {
 
   static void inputJenis(String[][] sepeda) {
     Scanner sc = new Scanner(System.in);
-    String namaJenis;
     for (int i = 0; i < sepeda.length; i++) {
       System.out.print("> Input Jenis Sepeda " + (i + 1) + " : ");
-      namaJenis = sc.next();
+      String namaJenis = sc.next();
       sepeda[i][0] = namaJenis;
     }
   }
@@ -133,12 +156,16 @@ public class rentalSepeda {
     return nama;
   }
 
-  static void rentalUnit(String[][] sepeda, String nama, int waktu, int unitJenis, int lama, double harga) {
+  static void rentalUnit(String[][] sepeda, String nama, int unitJenis, double harga) {
     Scanner sc = new Scanner(System.in);
     int pilihan = 0, pilihUnit = 0;
     boolean isValidInput = false, uangCukup = true;
+    int waktu = 0;
     while (uangCukup) {
       do {
+
+        waktu = lamaPinjam();
+
         System.out.print("Masukkan jenis sepeda: ");
         String pilihJenis = sc.next();
 
@@ -198,6 +225,13 @@ public class rentalSepeda {
     boolean namaValid = false;
 
     do {
+
+      System.out.print("Tekan [ Y ] jika belum ada yang meminjam : ");
+      String keluar = sc.nextLine();
+      if (keluar.equalsIgnoreCase("Y")){
+        break;
+      }
+
       System.out.print("> Input nama peminjam : ");
       String nama = sc.nextLine();
 
@@ -224,14 +258,14 @@ public class rentalSepeda {
     } while (!namaValid);
   }
 
-  static int jumlahJenis() {
+  static int jenis() {
     Scanner sc = new Scanner(System.in);
     System.out.print("> Berapa jenis yang direntalkan : ");
     int jumlah = sc.nextInt();
     return jumlah;
   }
 
-  static int unitJenis() {
+  static int unit() {
     Scanner sc = new Scanner(System.in);
     System.out.print("> Jumlah per Jenis : ");
     int jumlah = sc.nextInt();
